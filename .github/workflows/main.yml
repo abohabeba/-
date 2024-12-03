@@ -1,0 +1,41 @@
+```python
+class SchoolSchedule:
+    def __init__(self, num_teachers, num_classes, subjects_info):
+        self.num_teachers = num_teachers
+        self.num_classes = num_classes
+        self.subjects_info = subjects_info
+        self.schedule = {f'Class {i + 1}': [] for i in range(num_classes)}
+
+    def generate_schedule(self):
+        for subject, details in self.subjects_info.items():
+            for class_num in range(self.num_classes):
+                for _ in range(details['hours_per_class']):
+                    if len(self.schedule[f'Class {class_num + 1}']) < details['hours_per_week']:
+                        teacher = self.assign_teacher(subject)
+                        self.schedule[f'Class {class_num + 1}'].append((subject, teacher))
+
+    def assign_teacher(self, subject):
+        # Here you can implement a more sophisticated teacher assignment logic
+        return f'Teacher for {subject}'
+
+    def display_schedule(self):
+        for class_num, subjects in self.schedule.items():
+            print(f"{class_num}:")
+            for subject, teacher in subjects:
+                print(f"  {subject} - {teacher}")
+            print()
+
+if __name__ == "__main__":
+    subjects_info = {
+        'Math': {'hours_per_week': 5, 'hours_per_class': 1},
+        'Science': {'hours_per_week': 4, 'hours_per_class': 1},
+        'History': {'hours_per_week': 3, 'hours_per_class': 1},
+    }
+
+    num_teachers = 10
+    num_classes = 3
+
+    school_schedule = SchoolSchedule(num_teachers, num_classes, subjects_info)
+    school_schedule.generate_schedule()
+    school_schedule.display_schedule()
+```
